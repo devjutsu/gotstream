@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DefaultGenerics, StreamChat } from 'stream-chat';
+import { ChannelSort, DefaultGenerics, StreamChat } from 'stream-chat';
 import { Chat, Channel, ChannelHeader, ChannelList, LoadingIndicator, MessageInput, MessageList, Thread, Window } from 'stream-chat-react';
 
 import 'stream-chat-react/dist/css/index.css';
@@ -7,10 +7,10 @@ import 'stream-chat-react/dist/css/index.css';
 const userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGF3bi1zbm93LTgiLCJleHAiOjE2NTc5MDYzOTh9.KxlQEpFwyLvqWkq1Zy0iJBZGdomQCH3m3MKU7OlF1Yg';
 
 const filters = { type: 'messaging', members: { $in: ['dawn-snow-8'] } };
-const sort = { last_message_at: -1 };
+const sort = { last_message_at: -1 } as ChannelSort;
 
 const App = () => {
-  const [chatClient, setChatClient] = useState(null);
+  const [chatClient, setChatClient] = useState(null as (StreamChat<DefaultGenerics> | null));
 
   useEffect(() => {
     const initChat = async () => {
