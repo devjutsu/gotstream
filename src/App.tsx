@@ -25,7 +25,6 @@ const user = {
 
 export default function App() {
   const [client, setClient] = useState<StreamChat>();
-  const [channel, setChannel] = useState<ChatChannel>();
 
   useEffect(() => {
     async function init() {
@@ -41,7 +40,6 @@ export default function App() {
       await chan.watch();
       console.log('chan:', chan);
       setClient(chatClient);
-      setChannel(chan);
     }
 
     init();
@@ -53,7 +51,8 @@ export default function App() {
 
   return (
     <Chat client={client} theme="messaging dark">
-      <Channel channel={channel}>
+      <ChannelList />
+      <Channel>
         <Window>
           <ChannelHeader />
           <MessageList />
