@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ChannelSort, DefaultGenerics, StreamChat } from 'stream-chat';
-import { Chat, Channel, ChannelHeader, ChannelList, LoadingIndicator, MessageInput, MessageList, Thread, Window } from 'stream-chat-react';
-
+import { Chat,      // no ui, general data about chat app
+          Channel,  // no ui, data about active channel
+          Window,   // container utility, responsiveness
+          ChannelHeader, // basic info about active channel
+          MessageList,  // list of messages in currently active channel
+          MessageInput,
+          Thread,       // manages threads
+          ChannelList, 
+          LoadingIndicator } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
 
 const userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGF3bi1zbm93LTgiLCJleHAiOjE2NTc5MDYzOTh9.KxlQEpFwyLvqWkq1Zy0iJBZGdomQCH3m3MKU7OlF1Yg';
@@ -37,7 +44,7 @@ const App = () => {
 
   return (
     <Chat client={chatClient} theme='messaging light'>
-      <ChannelList filters={filters} sort={sort} />
+      <ChannelList filters={filters}  />
       <Channel>
         <Window>
           <ChannelHeader />
