@@ -12,6 +12,7 @@ import { Chat,      // no ui, general data about chat app
 import 'stream-chat-react/dist/css/index.css';
 
 const userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGF3bi1zbm93LTgiLCJleHAiOjE2NTc5MDYzOTh9.KxlQEpFwyLvqWkq1Zy0iJBZGdomQCH3m3MKU7OlF1Yg';
+const apiKey = process.env.REACT_APP_STRAM_API_KEY ?? '';
 
 const filters = { type: 'messaging', members: { $in: ['dawn-snow-8'] } };
 const sort = { last_message_at: -1 } as ChannelSort;
@@ -21,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     const initChat = async () => {
-      const client = StreamChat.getInstance('dz5f4d5kzrue');
+      const client = StreamChat.getInstance(apiKey);
 
       await client.connectUser(
         {
