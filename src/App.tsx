@@ -14,47 +14,38 @@ import 'stream-chat-react/dist/css/index.css';
 const userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGF3bi1zbm93LTgiLCJleHAiOjE2NTc5MDYzOTh9.KxlQEpFwyLvqWkq1Zy0iJBZGdomQCH3m3MKU7OlF1Yg';
 const apiKey = process.env.REACT_APP_STRAM_API_KEY ?? '';
 
-const filters = { type: 'messaging', members: { $in: ['dawn-snow-8'] } };
-const sort = { last_message_at: -1 } as ChannelSort;
+const user = {
+  id: 'pinger',
+  name: 'Pinger',
+  image: 'https://getstream.imgix.net/images/random_svg/PN.png'
+}
+
 
 const App = () => {
-  const [chatClient, setChatClient] = useState(null as (StreamChat<DefaultGenerics> | null));
+  const [client, setClient] = useState(null as (StreamChat<DefaultGenerics> | null));
+  const [channel, setChannel] = useState(null);
 
   useEffect(() => {
-    const initChat = async () => {
-      const client = StreamChat.getInstance(apiKey);
+    async function init() {
+      const chatClient = StreamChat.getInstance(apiKey);
+      await chatClient.connectUser(user, chatClient.devToken(user.id));
 
-      await client.connectUser(
-        {
-          id: 'dawn-snow-8',
-          name: 'dawn',
-          image: 'https://getstream.io/random_png/?id=dawn-snow-8&name=dawn',
-        },
-        userToken,
-      );
+      const channel = chatClient.channel('messaging', 'real-talk', {
+        image: 'https://getstream.imgix.net/images/random_svg/RT.png',
+        name: 'Real Talk',
+        members: [user.id]
+      });
 
-      setChatClient(client);
-    };
+      await channel.watch();
+      setClient(chatClient);
+    }
 
-    initChat();
-  }, []);
+    init();
+  }, [])
 
-  if (!chatClient) {
-    return <LoadingIndicator />;
-  }
 
   return (
-    <Chat client={chatClient} theme='messaging light'>
-      <ChannelList filters={filters}  />
-      <Channel>
-        <Window>
-          <ChannelHeader />
-          <MessageList />
-          <MessageInput />
-        </Window>
-        <Thread />
-      </Channel>
-    </Chat>
+    <></>
   );
 };
 
