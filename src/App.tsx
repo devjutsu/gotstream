@@ -23,6 +23,9 @@ const user = {
   image: 'https://getstream.imgix.net/images/random_svg/PN.png'
 }
 
+const filters = { type: 'messaging', members: { $in: [user.id] } };
+const sort = { last_message_at: -1 } as ChannelSort;
+
 export default function App() {
   const [client, setClient] = useState<StreamChat>();
 
@@ -45,13 +48,16 @@ export default function App() {
     init();
   }, [])
 
-  
+
 
   if (!client) return <LoadingIndicator />
 
   return (
     <Chat client={client} theme="messaging dark">
-      <ChannelList />
+      <ChannelList
+        filters={filters}
+        sort={sort}
+      />
       <Channel>
         <Window>
           <ChannelHeader />
