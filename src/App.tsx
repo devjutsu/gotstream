@@ -40,7 +40,14 @@ export default function App() {
         members: [user.id]
       });
 
+      const chan1 = chatClient.channel('messaging', 'unreal-talk', {
+        image: 'https://getstream.imgix.net/images/random_svg/UT.png',
+        name: 'UnReal Talk',
+        members: [user.id]
+      });
+
       await chan.watch();
+      await chan1.watch();
       console.log('chan:', chan);
       setClient(chatClient);
     }
