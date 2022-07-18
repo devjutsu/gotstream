@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChannelSort, DefaultGenerics, StreamChat } from 'stream-chat';
+import { ChannelSort, DefaultGenerics, StreamChat, Channel as ChatChannel } from 'stream-chat';
 import {
   Chat,      // no ui, general data about chat app
   Channel,  // no ui, data about active channel
@@ -12,6 +12,7 @@ import {
   LoadingIndicator
 } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
+import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
 
 const userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGF3bi1zbm93LTgiLCJleHAiOjE2NTc5MDYzOTh9.KxlQEpFwyLvqWkq1Zy0iJBZGdomQCH3m3MKU7OlF1Yg';
 const apiKey = process.env.REACT_APP_STRAM_API_KEY ?? '';
@@ -23,29 +24,32 @@ const user = {
 }
 
 export default function App() {
-  const [client, setClient] = useState(null as (StreamChat<DefaultGenerics> | null));
-  const [channel, setChannel] = useState(null);
+  const [client, setClient] = useState<StreamChat>();
+  const [channel, setChannel] = useState<ChatChannel>();
 
   useEffect(() => {
     async function init() {
       const chatClient = StreamChat.getInstance(apiKey);
       await chatClient.connectUser(user, chatClient.devToken(user.id));
 
-      const channel = chatClient.channel('messaging', 'real-talk', {
+      const chan = chatClient.channel('messaging', 'real-talk', {
         image: 'https://getstream.imgix.net/images/random_svg/RT.png',
         name: 'Real Talk',
         members: [user.id]
       });
 
-      await channel.watch();
+      await chan.watch();
+      console.log('chan:', chan);
       setClient(chatClient);
+      setChannel(chan);
     }
 
     init();
   }, [])
 
-  console.log('api key:', apiKey);
-  if (!channel || !client) return <LoadingIndicator />
+  
+
+  if (!client) return <LoadingIndicator />
 
   return (
     <Chat client={client} theme="messaging dark">
