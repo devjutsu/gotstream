@@ -10,6 +10,7 @@ import {
   Thread,       // manages threads
   ChannelList,
   LoadingIndicator,
+  useChatContext,
 } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
@@ -25,6 +26,10 @@ const user = {
 
 const filters = { type: 'messaging', members: { $in: [user.id] } };
 const sort = { last_message_at: -1 } as ChannelSort;
+
+function CustomChannelHeader() {
+  const {channel} = useChatContext();
+}
 
 function CustomChannelPreview(props: any) {
   const { channel, setActiveChannel } = props;
