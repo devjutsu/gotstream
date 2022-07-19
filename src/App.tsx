@@ -32,6 +32,8 @@ function CustomChannelHeader() {
   const data = channel?._data;
 
   return (<header style={{ height: '40px', backgroundColor: 'white', marginBottom: '20px', borderRadius: '10px', padding: '10px', display: 'flex', alignItems: 'center' }}>
+    {data.image && (<img style={{width: 20, height: 20, borderRadius: '50%', marginRight: 10}} src={data.image} alt=""></img>
+    }
   </ header>)
 }
 
