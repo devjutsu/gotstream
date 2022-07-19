@@ -29,11 +29,13 @@ const sort = { last_message_at: -1 } as ChannelSort;
 
 function CustomChannelHeader() {
   const { channel } = useChatContext();
-  const data = channel?._data;
+  const data = channel?.data;
 
   return (<header style={{ height: '40px', backgroundColor: 'white', marginBottom: '20px', borderRadius: '10px', padding: '10px', display: 'flex', alignItems: 'center' }}>
-    {data.image && (<img style={{width: 20, height: 20, borderRadius: '50%', marginRight: 10}} src={data.image} alt=""></img>
+    {
+      data?.image && (<img style={{width: 20, height: 20, borderRadius: '50%', marginRight: 10}} src={data?.image} alt=""></img>)
     }
+    {data?.name}
   </ header>)
 }
 
@@ -90,7 +92,7 @@ export default function App() {
       />
       <Channel>
         <Window>
-          <ChannelHeader />
+          <CustomChannelHeader />
           <MessageList />
           <MessageInput />
         </Window>
