@@ -9,7 +9,7 @@ import {
   MessageInput,
   Thread,       // manages threads
   ChannelList,
-  LoadingIndicator
+  LoadingIndicator,
 } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/index.css';
 import { DefaultStreamChatGenerics } from 'stream-chat-react/dist/types/types';
@@ -25,6 +25,17 @@ const user = {
 
 const filters = { type: 'messaging', members: { $in: [user.id] } };
 const sort = { last_message_at: -1 } as ChannelSort;
+
+function CustomChannelPreview(props: any) {
+  const { channel, setActiveChannel } = props;
+  const { messages } = channel.state;
+  const lastMessage = messages[messages.length - 1];
+
+  return (<button onClick={() => setActiveChannel(channel)}>
+    <div>{channel.data.name || 'noname'}</div>
+    <div style={{ fontSize: '14px' }}>{lastMessage}</div>
+  </button>)
+}
 
 export default function App() {
   const [client, setClient] = useState<StreamChat>();
@@ -64,6 +75,7 @@ export default function App() {
       <ChannelList
         filters={filters}
         sort={sort}
+        // Preview={CustomChannelPreview}
       />
       <Channel>
         <Window>
