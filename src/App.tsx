@@ -28,7 +28,11 @@ const filters = { type: 'messaging', members: { $in: [user.id] } };
 const sort = { last_message_at: -1 } as ChannelSort;
 
 function CustomChannelHeader() {
-  const {channel} = useChatContext();
+  const { channel } = useChatContext();
+  const data = channel?._data;
+
+  return (<header style={{ height: '40px', backgroundColor: 'white', marginBottom: '20px', borderRadius: '10px', padding: '10px', display: 'flex', alignItems: 'center' }}>
+  </ header>)
 }
 
 function CustomChannelPreview(props: any) {
@@ -80,7 +84,7 @@ export default function App() {
       <ChannelList
         filters={filters}
         sort={sort}
-        // Preview={CustomChannelPreview}
+      // Preview={CustomChannelPreview}
       />
       <Channel>
         <Window>
